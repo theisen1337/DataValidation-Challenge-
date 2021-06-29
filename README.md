@@ -32,6 +32,7 @@ The feature seems pretty straight forward, I will start by laying out the steps 
 7. Test with Postman (20 minutes)
 
 After these steps are satisfied, I will attempt to finish bonus criteria.
+
 8. Setup a Dockerfile for the back-end API, and business logic.
 9. Using the Python standard library. (This should be done by default)
 10.  Testing (This will be down during development)
