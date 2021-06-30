@@ -15,34 +15,111 @@ import copy
 # SelfMade
 from Utility import Utility as util
 
-DayKey = {
-    'Mon': 0,
-    'Tues': 1,
-    'Wed': 2,
-    'Thu': 3,
-    'Fri': 4,
-    'Sat': 5,
-    'Sun': 6,
-}
-
-DayStandard = {
-    'Mon': 'Monday',
-    'Tues': 'Tuesday',
-    'Wed': 'Wednesday',
-    'Thu': 'Thursday',
-    'Fri': 'Friday',
-    'Sat': 'Saturday',
-    'Sun': 'Sunday',
-}
-
 
 class DataValidator(object):
 
     def __init__(self):
         self.header = ""
+        self.day_standard = {
+            'Mon': 'Monday',
+            'Tues': 'Tuesday',
+            'Wed': 'Wednesday',
+            'Thu': 'Thursday',
+            'Fri': 'Friday',
+            'Sat': 'Saturday',
+            'Sun': 'Sunday',
+        }
+        self.day_key = {
+            'Mon': 0,
+            'Tues': 1,
+            'Wed': 2,
+            'Thu': 3,
+            'Fri': 4,
+            'Sat': 5,
+            'Sun': 6,
+        }
+
         super(DataValidator, self).__init__()
 
-    def _to_military_time(self, time_str: str) -> int:
+    @staticmethod
+    def _standard_time_format(time_str: str) -> str:
+        """
+        :param time_str: string that has time
+        :return: standardized string of time
+
+            This is a private function that should be only called from within this class, and test.
+            This will attempt to covert 2 digit time to 4 digit format time.
+
+            Examples:
+                1 am -> 1:00 am
+                1 Pm -> 1:00 Pm
+                7 pM -> 7:00 pM
+                8:00 am -> 8:00 am
+
+        """
+
+        if len(util.string_to_int_str(time_str)) <= 4 and ':' in time_str:
+            # 00:01 - 00:59
+            # 12:00, 1:59
+
+            # Try to validate input data
+            if util.string_to_int(time_str) > 1259 or \
+                    util.string_to_int(time_str) < 1 or \
+                    ('AM' not in time_str.upper() and 'PM' not in time_str.upper()):
+                print("Error with value: ", time_str, " looking for values like 11:00 am, 7:00 pm, 3:15 am")
+                raise ValueError
+
+            return time_str
+
+        elif len(util.string_to_int_str(time_str)) <= 2:
+            # 12 pm
+            # 2 am
+
+            # Try to validate input data
+            if util.string_to_int(time_str) > 12 or \
+                    util.string_to_int(time_str) < 1 or \
+                    ('AM' not in time_str.upper() and 'PM' not in time_str.upper()):
+                print('Error with value: ', time_str, " looking for values like 11 am, 7 pm, 3:15 am")
+                raise ValueError
+
+            return str(util.string_to_int_str(time_str) + ":00" + time_str.split(" ")[1])
+        else:
+            print("No Implementation for time that is not 00:00 or 00 ", time_str)
+            raise ValueError
+
+    def get_day_standard(self) -> dict:
+        """
+        :return: Getter for receiving day standard data
+
+            {
+                'Mon': 'Monday',
+                'Tues': 'Tuesday',
+                'Wed': 'Wednesday',
+                'Thu': 'Thursday',
+                'Fri': 'Friday',
+                'Sat': 'Saturday',
+                'Sun': 'Sunday',
+            }
+        """
+        return copy.deepcopy(self.day_standard)
+
+    def get_day_key(self) -> dict:
+        """
+        :return: Getter for receiving day key data
+            {
+                'Mon': 0,
+                'Tues': 1,
+                'Wed': 2,
+                'Thu': 3,
+                'Fri': 4,
+                'Sat': 5,
+                'Sun': 6,
+            }
+        """
+        return copy.deepcopy(self.day_key)
+
+    # TODO consider moving to utility class, or making a TimeCoverter Class?
+    def to_military_time(self, time_str: str) -> int:
         """
         :param time_str: String that contains time.
         :return int: Integer of time in Military time.
@@ -84,52 +161,6 @@ class DataValidator(object):
             print("No Implementation for time that is not AM/am or PM/pm", time_str)
             raise NotImplementedError
 
-    @staticmethod
-    def _standard_time_format(time_str: str) -> str:
-        """
-        :param time_str: string that has time
-        :return: standardized string of time
-
-            This is a private function that should be only called from within this class, and test.
-            This will attempt to covert 2 digit time to 4 digit format time.
-
-            Examples:
-                1 am -> 1:00 am
-                1 Pm -> 1:00 Pm
-                7 pM -> 7:00 pM
-                8:00 am -> 8:00 am
-
-        """
-
-        if len(util.string_to_int_str(time_str)) <= 4 and ':' in time_str:
-            # 00:01 - 00:59
-            # 12:00, 1:59
-
-            # Try to validate input data
-            if util.string_to_int(time_str) > 1259 or \
-                util.string_to_int(time_str) < 1 or \
-                    ('AM' not in time_str.upper() and 'PM' not in time_str.upper()):
-                print("Error with value: ", time_str, " looking for values like 11:00 am, 7:00 pm, 3:15 am")
-                raise ValueError
-
-            return time_str
-
-        elif len(util.string_to_int_str(time_str)) <= 2:
-            # 12 pm
-            # 2 am
-
-            # Try to validate input data
-            if util.string_to_int(time_str) > 12 or \
-                    util.string_to_int(time_str) < 1 or \
-                    ('AM' not in time_str.upper() and 'PM' not in time_str.upper()):
-                print('Error with value: ', time_str, " looking for values like 11 am, 7 pm, 3:15 am")
-                raise ValueError
-
-            return str(util.string_to_int_str(time_str) + ":00" + time_str.split(" ")[1])
-        else:
-            print("No Implementation for time that is not 00:00 or 00 ", time_str)
-            raise ValueError
-
     def _parse_time_chunk(self, chunk: str) -> dict:
         """
         :param chunk: Is a string that holds the days and hours
@@ -157,36 +188,36 @@ class DataValidator(object):
                 first, last = d.split('-')
 
                 # Check that days are valid
-                if first not in list(DayKey.keys()) or last not in list(DayKey.keys()):
+                if first not in list(self.day_key.keys()) or last not in list(self.day_key.keys()):
                     print("Found Invalidate days in: ", days, " >>>", first, " - ", last)
                     raise ValueError
 
                 # grab range.
-                time_standard[DayStandard[first]] = []
+                time_standard[self.day_standard[first]] = []
                 while first != last:
                     # Iterate begin_sub_chunk until it is equal end_sub_chunk
-                    first = util.key_by_index(DayKey, (DayKey[first] + 1) % len(list(DayKey.keys())))
+                    first = util.key_by_index(self.day_key, (self.day_key[first] + 1) % len(list(self.day_key.keys())))
 
-                    # Set Standardized time using DayStandard dict
-                    time_standard[DayStandard[first]] = []
+                    # Set Standardized time using self.day_standard dict
+                    time_standard[self.day_standard[first]] = []
 
             else:
                 # Single day.
                 # Check that day is valid
-                if d not in list(DayKey.keys()):
+                if d not in list(self.day_key.keys()):
                     print("Found Invalidate day in: ", days, " >>>", d)
                     raise ValueError
 
                 #
-                time_standard[DayStandard[d]] = []
+                time_standard[self.day_standard[d]] = []
 
         # parse Hours
         open_time, close_time = hours.split(' - ')
 
         open_time = self._standard_time_format(open_time)
-        open_time = self._to_military_time(open_time)
+        open_time = self.to_military_time(open_time)
         close_time = self._standard_time_format(close_time)
-        close_time = self._to_military_time(close_time)
+        close_time = self.to_military_time(close_time)
 
         for k in list(time_standard.keys()):
             time_standard[k].extend([open_time, close_time])
@@ -205,7 +236,7 @@ class DataValidator(object):
 
             1. First entry can contain numbers or text.         -> Parse first entry to str()
             2. Time starts with a day chunk. i.e. "Day," or "Day-Day"
-            3. Day must be inside of global "DayKey"            -> Throw ValueError if not.
+            3. Day must be inside of global "self.day_key"            -> Throw ValueError if not.
 
 
             Example of return:
@@ -251,6 +282,11 @@ class DataValidator(object):
 
                 else:
                     time_standardized = self._parse_time_chunk(time)
+
+                # Make sure that all days without hours are closed.
+                for k in list(self.day_standard.keys()):
+                    if self.day_standard[k] not in time_standardized:
+                        time_standardized[self.day_standard[k]] = [0, 0]
 
                 # Setup return dictionary with name, and time
                 dict_data[name] = time_standardized
@@ -313,7 +349,3 @@ class DataValidator(object):
         # Try to do Validation on data.
         return self._validation(read_data)
 
-
-if __name__ == "__main__":
-    DV = DataValidator()
-    DV.open_file('../restaurants.csv')

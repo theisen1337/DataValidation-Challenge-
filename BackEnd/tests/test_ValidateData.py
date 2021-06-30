@@ -100,7 +100,7 @@ def test_MilitaryTime_Non_AM_PM():
 
     d = dv.DataValidator()
     try:
-        d._to_military_time("11:00 pz")
+        d.to_military_time("11:00 pz")
         assert (False)
     except ValueError:
         assert (True)
@@ -115,7 +115,7 @@ def test_MilitaryTime_Trash1():
 
     d = dv.DataValidator()
     try:
-        d._to_military_time("11:00")
+        d.to_military_time("11:00")
         assert (False)
     except NotImplementedError:
         assert (True)
@@ -130,7 +130,7 @@ def test_MilitaryTime_Trash1():
 
     d = dv.DataValidator()
     try:
-        d._to_military_time("27")
+        d.to_military_time("27")
         assert (False)
     except ValueError:
         assert (True)
@@ -141,42 +141,42 @@ def test_MilitaryTime_Trash1():
 def test_MilitaryTime_2_digit():
 
     d = dv.DataValidator()
-    t = d._to_military_time("11 pm")
+    t = d.to_military_time("11 pm")
     assert(t == 2300)
 
 
 def test_MilitaryTime_4_digit():
 
     d = dv.DataValidator()
-    t = d._to_military_time("11:59 pm")
+    t = d.to_military_time("11:59 pm")
     assert(t == 2359)
 
 
 def test_MilitaryTime_12AM():
 
     d = dv.DataValidator()
-    t = d._to_military_time("12:01 Am")
+    t = d.to_military_time("12:01 Am")
     assert(t == 1)
 
 
 def test_MilitaryTime_1200AM():
 
     d = dv.DataValidator()
-    t = d._to_military_time("12:00 aM")
+    t = d.to_military_time("12:00 aM")
     assert(t == 0)
 
 
 def test_MilitaryTime_12PM():
 
     d = dv.DataValidator()
-    t = d._to_military_time("12:59 pm")
+    t = d.to_military_time("12:59 pm")
     assert(t == 1259)
 
 
 def test_MilitaryTime_1200PM():
 
     d = dv.DataValidator()
-    t = d._to_military_time("12 pm")
+    t = d.to_military_time("12 pm")
     assert(t == 1200)
 
 

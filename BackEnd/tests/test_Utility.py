@@ -5,7 +5,8 @@
 """
 
 
-import sys, os
+import os
+import sys
 
 # Make sure that the application source directory (this directory's parent) is
 # on sys.path.
