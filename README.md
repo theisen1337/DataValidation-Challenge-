@@ -71,18 +71,18 @@ Why Flask for the REST API?
 * Depending on outcome on the note above, to_military_time should either be a public method, or moved to a TimeCoverter class or Utility.
 
 ### Notes for Flask Implementation.
-Do not expose flask web-server to the internet to test with postman, this lead to someone sending my Flask service with random strings and Hex codes.
-Using request library lead to much better results.
-Request does not send as json, so some care needs to be taken to the back-end to handle none json calls to the API.
-Test Fail when the server is not running, this might actual be a positive since the server not running is a problem.
+* Do not expose flask web-server to the internet to test with postman, this lead to someone sending my Flask service with random strings and Hex codes.
+* Using request library lead to much better results.
+* Request does not send as json, so some care needs to be taken to the back-end to handle none json calls to the API.
+* Test Fail when the server is not running, this might actual be a positive since the server not running is a problem.
 
 
 ### Installation
-install pytest
-install flask
-install requests
+* install pytest
+* install flask
+* install requests
 
 ### Future Ideas and implementation
-Setup a dockerfile to be run the api service.
-Vue.js front-end delivered by flask.py to interact with back-end api.
-Add an API to get closing soon restaurants, takes n future time from m time and returns a list of restaurants that will be closed at that n time.
+* Setup a dockerfile to be run the api service.
+* Vue.js front-end delivered by flask.py to interact with back-end api.
+* Add an API to get closing soon restaurants, takes n future time from m time and returns a list of restaurants that will be closed at that n time.
