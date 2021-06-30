@@ -13,7 +13,7 @@ import re
 import copy
 
 # SelfMade
-from Utility import Utility as util
+from Utility import Utility as uTil
 
 
 class DataValidator(object):
@@ -58,31 +58,31 @@ class DataValidator(object):
 
         """
 
-        if len(util.string_to_int_str(time_str)) <= 4 and ':' in time_str:
+        if len(uTil.string_to_int_str(time_str)) <= 4 and ':' in time_str:
             # 00:01 - 00:59
             # 12:00, 1:59
 
             # Try to validate input data
-            if util.string_to_int(time_str) > 1259 or \
-                    util.string_to_int(time_str) < 1 or \
+            if uTil.string_to_int(time_str) > 1259 or \
+                    uTil.string_to_int(time_str) < 1 or \
                     ('AM' not in time_str.upper() and 'PM' not in time_str.upper()):
                 print("Error with value: ", time_str, " looking for values like 11:00 am, 7:00 pm, 3:15 am")
                 raise ValueError
 
             return time_str
 
-        elif len(util.string_to_int_str(time_str)) <= 2:
+        elif len(uTil.string_to_int_str(time_str)) <= 2:
             # 12 pm
             # 2 am
 
             # Try to validate input data
-            if util.string_to_int(time_str) > 12 or \
-                    util.string_to_int(time_str) < 1 or \
+            if uTil.string_to_int(time_str) > 12 or \
+                    uTil.string_to_int(time_str) < 1 or \
                     ('AM' not in time_str.upper() and 'PM' not in time_str.upper()):
                 print('Error with value: ', time_str, " looking for values like 11 am, 7 pm, 3:15 am")
                 raise ValueError
 
-            return str(util.string_to_int_str(time_str) + ":00" + time_str.split(" ")[1])
+            return str(uTil.string_to_int_str(time_str) + ":00" + time_str.split(" ")[1])
         else:
             print("No Implementation for time that is not 00:00 or 00 ", time_str)
             raise ValueError
@@ -141,7 +141,7 @@ class DataValidator(object):
         # Check for AM, or PM
         if 'AM' in str(time_str).upper():
 
-            time_int = util.string_to_int(time_str)
+            time_int = uTil.string_to_int(time_str)
 
             # 12:00 AM - 12:59 AM
             if time_int >= 1200:
@@ -150,13 +150,13 @@ class DataValidator(object):
                 return time_int
 
         elif 'PM' in str(time_str).upper():
-            time_int = util.string_to_int(time_str)
+            time_int = uTil.string_to_int(time_str)
 
             # 12:00 PM to 12:59 PM
             if time_int >= 1200:
                 return time_int
             else:
-                return util.string_to_int(time_str) + 1200
+                return uTil.string_to_int(time_str) + 1200
         else:
             print("No Implementation for time that is not AM/am or PM/pm", time_str)
             raise NotImplementedError
@@ -176,7 +176,7 @@ class DataValidator(object):
 
         time_standard = {}
 
-        midpoint = util.first_digit_index(chunk)
+        midpoint = uTil.first_digit_index(chunk)
         days = chunk[:midpoint]
         hours = chunk[midpoint:]
 
@@ -196,7 +196,7 @@ class DataValidator(object):
                 time_standard[self.day_standard[first]] = []
                 while first != last:
                     # Iterate begin_sub_chunk until it is equal end_sub_chunk
-                    first = util.key_by_index(self.day_key, (self.day_key[first] + 1) % len(list(self.day_key.keys())))
+                    first = uTil.key_by_index(self.day_key, (self.day_key[first] + 1) % len(list(self.day_key.keys())))
 
                     # Set Standardized time using self.day_standard dict
                     time_standard[self.day_standard[first]] = []
@@ -348,4 +348,3 @@ class DataValidator(object):
 
         # Try to do Validation on data.
         return self._validation(read_data)
-

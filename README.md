@@ -28,8 +28,8 @@ The feature seems pretty straight forward, I will start by laying out the steps 
 3. (x) Start by getting data into python and analyzing data for setting up data digestion (estimated: ~30 minutes) 
 4. (x) Digest data into standard data format, and Test for unknowns and Test for edge cases (estimated: ~1.5 hour)
 5. (x) Setup and Test back-end business logic for handling date-time and generating restaurants open during that date-time. (estimated: ~1 hour)
-6. Setup Flask to implement REST API access to business logic. (estimated: 10 minutes)
-7. Test with Postman (estimated: 20 minutes)
+6. (x) Setup Flask to implement REST API access to business logic. (estimated: 10 minutes)
+7. (x) Test with ~~Postman~~ requests.py (estimated: 20 minutes)
 
 After these steps are satisfied, I will attempt to finish bonus criteria.
 
@@ -69,3 +69,20 @@ Why Flask for the REST API?
 
 * Timestamp string is in format “YYYY:MM:DD:HH:MM” to check time HH:MM must be converted to military time, unfortunately DataValidator cannot accept “24hour” clock format. A converter is done inside of the function. This converter should either live in DataValidator, Utility, or Business Logic. But it will require more consideration.
 * Depending on outcome on the note above, to_military_time should either be a public method, or moved to a TimeCoverter class or Utility.
+
+### Notes for Flask Implementation.
+Do not expose flask web-server to the internet to test with postman, this lead to someone sending my Flask service with random strings and Hex codes.
+Using request library lead to much better results.
+Request does not send as json, so some care needs to be taken to the back-end to handle none json calls to the API.
+Test Fail when the server is not running, this might actual be a positive since the server not running is a problem.
+
+
+### Installation
+install pytest
+install flask
+install requests
+
+### Future Ideas and implementation
+Setup a dockerfile to be run the api service.
+Vue.js front-end delivered by flask.py to interact with back-end api.
+Add an API to get closing soon restaurants, takes n future time from m time and returns a list of restaurants that will be closed at that n time.

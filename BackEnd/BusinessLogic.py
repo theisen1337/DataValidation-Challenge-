@@ -9,13 +9,14 @@
 import datetime
 
 # SelfMade
-from DataValidator import DataValidator as DV
-from Utility import Utility as util
+from DataValidator import DataValidator as dV
+from Utility import Utility as uTil
+
 
 class BusinessLogic (object):
 
     def __init__(self, file_path: str):
-        dv = DV()
+        dv = dV()
         self.dv = dv
         self.restaurants = dv.open_file(file_path)
         super(BusinessLogic, self).__init__()
@@ -99,7 +100,7 @@ class BusinessLogic (object):
         day_index = datetime.datetime.strptime(time_str, '%Y:%m:%d:%H:%M').weekday()
 
         # Get Shorthand of the day.
-        day_short = util.key_by_index(self.dv.get_day_key(), day_index)
+        day_short = uTil.key_by_index(self.dv.get_day_key(), day_index)
 
         # return full day standardized
         return self.dv.get_day_standard()[day_short]
@@ -116,8 +117,8 @@ class BusinessLogic (object):
         day = self.get_day_of_week(time_str)
 
         # Time to standard that DataValidator can handle it.
-        hour = util.string_to_int(time_str.split(':')[-2])
-        minute = util.string_to_int(time_str.split(':')[-1])
+        hour = uTil.string_to_int(time_str.split(':')[-2])
+        minute = uTil.string_to_int(time_str.split(':')[-1])
 
         if hour > 12:
             new_time_str = str(str(hour - 12) + ":" + str(minute) + " pm")
@@ -140,14 +141,3 @@ class BusinessLogic (object):
                         # Restaurant currently open.
                         open_restaurants.append(k)
         return open_restaurants
-
-
-if __name__ == '__main__':
-    bl = BusinessLogic('../restaurants.csv')
-    t = bl.current_epoch()
-    t2 = bl.current_date()
-    tj = bl.justify_string("29:14:48")
-    t3 = bl.get_restaurants()
-    t4 = bl.get_open_restaurants(tj)
-    ttt = bl.get_day_of_week("2021:06:30:16:30")
-    print("")
