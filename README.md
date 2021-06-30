@@ -23,13 +23,13 @@ If you have any questions, let me know. Use git to track your progress, and push
 
 ### Initial Thoughts
 The feature seems pretty straight forward, I will start by laying out the steps I plan to take.
-1. Setup git, pycharm, pytest, python 3.8, Postman, and pipeline for code version-control (~30 minutes)
-2. Setup up documentation to keep track of thoughts, setup, and procedure for feature. ( ~5 minutes)
-3. Start by getting data into python and analyzing data for setting up data digestion (~30 minutes) 
-4. Digest data into standard data format, and Test for unknowns and Test for edge cases (~1.5 hour)
-5. Setup and Test back-end business logic for handling date-time and generating restaurants open during that date-time. ( ~1 hour)
-6. Setup Flask to implement REST API access to business logic. (10 minutes)
-7. Test with Postman (20 minutes)
+1. (x) Setup git, pycharm, pytest, python 3.8, Postman, and pipeline for code version-control (estimated:~30 minutes)
+2. (x) Setup up documentation to keep track of thoughts, setup, and procedure for feature (estimated: ~5 minutes)
+3. (x) Start by getting data into python and analyzing data for setting up data digestion (estimated: ~30 minutes) 
+4. (x) Digest data into standard data format, and Test for unknowns and Test for edge cases (estimated: ~1.5 hour)
+5. Setup and Test back-end business logic for handling date-time and generating restaurants open during that date-time. (estimated: ~1 hour)
+6. Setup Flask to implement REST API access to business logic. (estimated: 10 minutes)
+7. Test with Postman (estimated: 20 minutes)
 
 After these steps are satisfied, I will attempt to finish bonus criteria.
 
@@ -55,5 +55,14 @@ This takes more time but in my experience is always worth it.
 Why Flask for the REST API?
 >Well it is not as robust as Django, but Flask is quicker to setup and is more appropriate for small projects that consist of one contributor.
 
+----------
+
+### Notes From Data validation and standardization
+ Dates are  difficult to parse. I spent a lot of time trying to get a difficult process to 
+ work for ingesting dates and times. I walked away for 20 minutes and discovered a better way to ingest data.
+
+* Looks like data was enter incorrectly for “12:00PM” for some restaurants like “'Beasley\'s Chicken + Honey'”. This would mean that the restaurant is only open 1 hour a day.
+* Standardized data is not saved off, this could be done to allow for quicker start time of the business logic
+* Data acquisition seems haphazard, and investing in better acquisition might be worth it.
 
 
