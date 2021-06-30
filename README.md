@@ -27,7 +27,7 @@ The feature seems pretty straight forward, I will start by laying out the steps 
 2. (x) Setup up documentation to keep track of thoughts, setup, and procedure for feature (estimated: ~5 minutes)
 3. (x) Start by getting data into python and analyzing data for setting up data digestion (estimated: ~30 minutes) 
 4. (x) Digest data into standard data format, and Test for unknowns and Test for edge cases (estimated: ~1.5 hour)
-5. Setup and Test back-end business logic for handling date-time and generating restaurants open during that date-time. (estimated: ~1 hour)
+5. (x) Setup and Test back-end business logic for handling date-time and generating restaurants open during that date-time. (estimated: ~1 hour)
 6. Setup Flask to implement REST API access to business logic. (estimated: 10 minutes)
 7. Test with Postman (estimated: 20 minutes)
 
@@ -65,4 +65,7 @@ Why Flask for the REST API?
 * Standardized data is not saved off, this could be done to allow for quicker start time of the business logic
 * Data acquisition seems haphazard, and investing in better acquisition might be worth it.
 
+### Notes for Business Logic
 
+* Timestamp string is in format “YYYY:MM:DD:HH:MM” to check time HH:MM must be converted to military time, unfortunately DataValidator cannot accept “24hour” clock format. A converter is done inside of the function. This converter should either live in DataValidator, Utility, or Business Logic. But it will require more consideration.
+* Depending on outcome on the note above, to_military_time should either be a public method, or moved to a TimeCoverter class or Utility.
