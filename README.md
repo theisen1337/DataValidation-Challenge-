@@ -78,9 +78,9 @@ Why Flask for the REST API?
 
 
 ### Installation
-* install pytest
-* install flask
-* install requests
+* Install pytest
+* Install flask
+* Install requests
 
 ### Future Ideas and implementation
 * Setup a dockerfile to be run the api service.
