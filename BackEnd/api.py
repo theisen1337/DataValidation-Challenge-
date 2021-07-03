@@ -14,7 +14,7 @@ import json
 # Self made
 from BusinessLogic import BusinessLogic as BL
 
-bl = BL('../restaurants.csv')
+bl = BL('./restaurants.csv')
 
 app = Flask(__name__)
 
